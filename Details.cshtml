@@ -1,0 +1,25 @@
+﻿@model DemoMVCWCF.Models.Product
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details @Model.fld_prod_name</h2>
+
+@using (Html.BeginForm("Details", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(Model => Model.fld_id)
+    <table class="table">
+        <tr>
+            <td> Product Name :</td>
+            <td>@Html.EditorFor(Model => Model.fld_prod_name, new { htmlAttributes = new { @class = "form-Control" } })</td>
+        </tr>
+        <tr>
+            <td> Product  Price:</td>
+            <td>@Html.EditorFor(Model => Model.fld_prod_price, new { htmlAttributes = new { @class = "form-Control" } })</td>
+        </tr>
+        <tr>
+            <td> Product Quantity:</td>
+            <td>@Html.EditorFor(Model => Model.fld_prod_qty, new { htmlAttributes = new { @class = "form-Control" } })</td>
+        </tr>
+    </table>
+}

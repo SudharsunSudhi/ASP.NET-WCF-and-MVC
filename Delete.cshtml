@@ -1,0 +1,34 @@
+﻿@model DemoMVCWCF.Models.Product
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+
+<h3>Are you sure you want to delete this?</h3>
+
+@using (Html.BeginForm("Delete", "Product"))
+{
+     @Html.HiddenFor(Model => Model.fld_id)
+    <table class="table">
+        <tr>
+            <td> Product Name :</td>
+            <td>@Html.EditorFor(Model => Model.fld_prod_name, new { htmlAttributes = new { @class = "form-Control" } })</td>
+        </tr>
+        <tr>
+            <td> Product  Price:</td>
+            <td>@Html.EditorFor(Model => Model.fld_prod_price, new { htmlAttributes = new { @class = "form-Control" } })</td>
+        </tr>
+        <tr>
+            <td> Product Quantity:</td>
+            <td>@Html.EditorFor(Model => Model.fld_prod_qty, new { htmlAttributes = new { @class = "form-Control" } })</td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <input type="submit"  value="Delete Product" class="btn btn-danger text-center" />
+            </td>
+        </tr>
+    </table>
+}

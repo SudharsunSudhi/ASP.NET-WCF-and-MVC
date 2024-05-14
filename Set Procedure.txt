@@ -1,0 +1,66 @@
+//Set
+
+
+ALTER PROC [dbo].[sp_set_products](@in_type INT,
+                            @fld_id INT,
+							@fld_prod_name NVARCHAR(50),
+							@fld_prod_price DECIMAL,
+							@fld_prod_qty INT)
+AS
+BEGIN 
+    BEGIN TRY
+         DECLARE @fld_action_status INT, @fld_message NVARCHAR(50) 
+	     IF @in_type=1 ---insert
+	        BEGIN
+		        INSERT INTO tbl_products(fld_prod_name,fld_prod_price,fld_prod_qty,fld_status) VALUES(@fld_prod_name,@fld_prod_price,@fld_prod_qty,0)
+				  IF @@ROWCOUNT>0
+		            BEGIN
+				       SET @fld_action_status=0;
+			           SET @fld_message='SUCCESS';
+			        END
+			     ELSE
+			        BEGIN
+				       SET @fld_action_status=1;
+					   SET @fld_message='FAIL';
+				    END
+		    END
+	     ELSE IF @in_type=2 ---Update
+	        BEGIN
+		        UPDATE tbl_products SET fld_prod_name=@fld_prod_name,fld_prod_price=@fld_prod_price,fld_prod_qty=@fld_prod_qty WHERE fld_id=@fld_id AND fld_status=0
+				  IF @@ROWCOUNT>0
+		            BEGIN
+				       SET @fld_action_status=0;
+			           SET @fld_message='SUCCESS';
+			        END
+			   ELSE
+			        BEGIN
+				       SET @fld_action_status=1;
+					   SET @fld_message='FAIL';
+				    END
+		    END
+	    ELSE IF @in_type=3 ---delete
+	        BEGIN
+		        UPDATE tbl_products SET fld_status=1 WHERE fld_id=@fld_id AND fld_status=0
+				  IF @@ROWCOUNT>0
+		            BEGIN
+				       SET @fld_action_status=0;
+			           SET @fld_message='SUCCESS';
+			        END
+			   ELSE
+			        BEGIN
+				       SET @fld_action_status=1;
+					   SET @fld_message='FAIL';
+				    END
+		    END
+		ELSE
+		    BEGIN
+		        SET @fld_action_status=1;
+				SET @fld_message='invalid type';
+		    END
+     END TRY
+	 BEGIN CATCH
+	    SET @fld_action_status=2;
+		SET @fld_message=ERROR_MESSAGE();
+	 END CATCH
+	 SELECT @fld_action_status fld_action_status, @fld_message fld_message;
+END

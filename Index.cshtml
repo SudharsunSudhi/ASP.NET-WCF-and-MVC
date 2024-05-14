@@ -1,0 +1,41 @@
+﻿@model List<DemoMVCWCF.Models.Product>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+<table class="table table-bordered table-striped table-hover" id="customerDatatable">
+    <tr>
+        <th>Product Id</th>
+        <th>Product Name</th>
+        <th>Product Price</th>
+        <th>Product Quantity</th>
+        <th>Operations</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.fld_id</td>
+            <td>@item.fld_prod_name</td>
+            <td>@item.fld_prod_price</td>
+            <td>@item.fld_prod_qty</td>
+            <td>
+                <a href="@Url.Action("Edit","Product",new { @id=item.fld_id})" class="btn btn-warning test">Edit</a>
+                <!-- Button trigger modal -->
+                @*<a class="btn btn-warning test">Edit</a>*@
+
+                <a href="@Url.Action("Delete","Product",new { @id=item.fld_id})" class="btn btn-danger" onclick="return confirm('Are You Sure Want To Delete @item.fld_prod_name ?')">Delete</a>
+                @*<button class="delete  btn btn-danger">Delete</button>
+                  <span class="delete11"></span>*@
+
+                <a href="@Url.Action("Details","Product",new { @id=item.fld_id})" class="btn btn-info test">Details</a>
+
+            </td>
+        </tr>
+    }
+</table>
+<a href="@Url.Action("Create","Product") " class="btn  btn-success">New Product</a>
+
+

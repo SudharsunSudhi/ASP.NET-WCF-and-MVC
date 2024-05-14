@@ -1,0 +1,31 @@
+// Get
+
+ALTER PROC [dbo].[sp_get_products](@in_type INT,
+                            @fld_id INT,
+							@fld_prod_name NVARCHAR(50),
+							@fld_prod_price DECIMAL,
+							@fld_prod_qty INT)
+AS
+BEGIN 
+    BEGIN TRY
+         DECLARE @fld_action_status INT, @fld_message NVARCHAR(50) 
+	     IF @in_type=1 ---select by id
+	        BEGIN
+		        SELECT * FROM tbl_products  WHERE fld_id=@fld_id AND fld_status=0
+		    END
+	     ELSE IF @in_type=2 ---select all
+	        BEGIN
+		        SELECT * FROM tbl_products WHERE fld_status=0
+		    END
+		ELSE
+		    BEGIN
+		        SET @fld_action_status=1;
+				SET @fld_message='invalid type';
+		    END
+     END TRY
+	 BEGIN CATCH
+	    SET @fld_action_status=2;
+		SET @fld_message=ERROR_MESSAGE();
+	 END CATCH
+	 SELECT @fld_action_status fld_action_status, @fld_message fld_message;
+END

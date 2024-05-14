@@ -1,0 +1,32 @@
+﻿@model DemoMVCWCF.Models.Product
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Add a New Product</h2>
+
+
+@using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <table class="table">
+        <tr>
+            <td>Enter Product Name :</td>
+            <td>@Html.EditorFor(Model => Model.fld_prod_name, new { htmlAttributes = new { @class = "form-Control" } })</td>
+        </tr>
+        <tr>
+            <td>Enter Product  Price:</td>
+            <td>@Html.EditorFor(Model => Model.fld_prod_price, new { htmlAttributes = new { @class = "form-Control" } })</td>
+        </tr>
+        <tr>
+            <td>Enter Product Quantity:</td>
+            <td>@Html.EditorFor(Model => Model.fld_prod_qty, new { htmlAttributes = new { @class = "form-Control" } })</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Add new Product" class="btn btn-success text-center" />
+            </td>
+        </tr>
+    </table>
+}
+
